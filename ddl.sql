@@ -3,7 +3,7 @@ use test;
 -- Delete Tables before Refresh
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS `job-skill`;
+DROP TABLE IF EXISTS `job_skill`;
 DROP TABLE IF EXISTS `skill`;
 DROP TABLE IF EXISTS `job`;
 DROP TABLE IF EXISTS `contact`;
@@ -69,7 +69,7 @@ CREATE TABLE `skill` (
       REFERENCES user(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `job-skill` (
+CREATE TABLE `job_skill` (
   `job_skill_id` VARCHAR(50) NOT NULL,
   `skill_id` VARCHAR(50) NOT NULL,
   `job_id` VARCHAR(50) NOT NULL,
