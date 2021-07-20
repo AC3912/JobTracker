@@ -1,6 +1,7 @@
 import { Redirect, Route, Switch } from "react-router";
+import { PrivateRoute } from "./components";
 
-import { LoginPage, SignupPage } from "./pages";
+import { Home, LoginPage, SignupPage } from "./pages";
 import Routes from "./Routes";
 
 const App = () => (
@@ -13,6 +14,10 @@ const App = () => (
       <Route path={Routes.SIGNUP_PAGE}>
         <SignupPage />
       </Route>
+
+      <PrivateRoute path={Routes.HOME_PAGE}>
+        <Home />
+      </PrivateRoute>
 
       <Route component={() => <Redirect to={Routes.LOGIN_PAGE} />} />
     </Switch>

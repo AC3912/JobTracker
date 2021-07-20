@@ -1,13 +1,41 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
-import { Footnote, Heading, SubHeading, TextInput } from "../components";
+import {
+  Footnote,
+  Heading,
+  SubHeading,
+  TextInput,
+  Button,
+} from "../components";
+import { createAccount, login } from "../requests";
 import Routes from "../Routes";
 
 const SignupPage = withRouter(({ match, history, location }) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignUp = async () => {
+    if (username && password && password === confirmPassword) {
+      try {
+        await createAccount(username, password);
+        await handleLogin();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      let res = await login(username, password);
+      localStorage.setItem("access_token", res.data);
+      history.push(Routes.HOME_PAGE);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
@@ -20,9 +48,9 @@ const SignupPage = withRouter(({ match, history, location }) => {
       </SubHeading>
       <div className="my-2">
         <TextInput
-          value={email}
-          setValue={setEmail}
-          placeholder="Enter an email..."
+          value={username}
+          setValue={setUsername}
+          placeholder="Enter a username..."
         />
       </div>
       <div className="my-2">
@@ -40,6 +68,9 @@ const SignupPage = withRouter(({ match, history, location }) => {
           placeholder="Confirm your password..."
           type="password"
         />
+      </div>
+      <div className="my-2">
+        <Button onClick={handleSignUp}>Submit</Button>
       </div>
       <Footnote
         unlinkedText="Already have an account?"
