@@ -1,7 +1,6 @@
 import { Redirect, Route, Switch } from "react-router";
 
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import { LoginPage, SignupPage } from "./pages";
 import Routes from "./Routes";
 
 const App = () => (
