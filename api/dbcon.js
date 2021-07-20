@@ -1,10 +1,23 @@
-var mysql = require('mysql');
-var pool = mysql.createPool({
-   connectionLimit : 10,
-   host            : '34.74.53.112',
-   user            : 'root',
-   password        : 'jobtracker',
-   database        : 'test'
+const mysql = require("serverless-mysql");
+
+// Initialize the database.
+const db = mysql({
+  config: {
+    host: "34.74.53.112",
+    user: "root",
+    password: "jobtracker",
+    database: "test",
+  },
 });
 
-module.exports.pool = pool;
+// Main helper function that forms and ends a connection to the database with
+// each query.
+exports.query = async (query) => {
+  try {
+    const results = await db.query(query);
+    await db.end();
+    return results;
+  } catch (error) {
+    return { error };
+  }
+};
